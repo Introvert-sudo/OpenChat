@@ -1,4 +1,4 @@
-package com.AyaChatApp.AyaChatApp;
+package AyaChat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

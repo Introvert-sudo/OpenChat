@@ -1,4 +1,4 @@
-package com.AyaChatApp.AyaChatApp;
+package AyaChat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
