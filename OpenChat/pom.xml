@@ -8,10 +8,11 @@
 		<version>3.5.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.AyaChatApp</groupId>
-	<artifactId>AyaChatApp</artifactId>
+	<groupId>com.OpenChat</groupId>
+	<artifactId>OpenChat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>AyaChatApp</name>
+	<packaging>pom</packaging>
+	<name>OpenChat</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -20,6 +21,11 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>web</module>
+		<module>ai</module>
+		<module>db</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
