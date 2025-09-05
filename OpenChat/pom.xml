@@ -25,6 +25,7 @@
 		<module>web</module>
 		<module>ai</module>
 		<module>db</module>
+		<module>core</module>
 	</modules>
 	<scm>
 		<connection/>

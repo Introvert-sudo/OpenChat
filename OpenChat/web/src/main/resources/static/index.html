@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OpenChat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{
+          --bg:#07060a;
+          --panel:#0b0a10;
+          --accent:#8a2be2; /* purple */
+          --accent-2:#5c3bd6;
+          --muted:#9a90a8;
+          --glow: 0 8px 30px rgba(138,43,226,0.15), 0 0 1px rgba(92,59,214,0.6) inset;
+          --glass: rgba(255,255,255,0.03);
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+          margin:0;
+          font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+          background: radial-gradient(1200px 600px at 10% 10%, rgba(92,59,214,0.06), transparent),
+                      radial-gradient(900px 500px at 90% 90%, rgba(138,43,226,0.04), transparent),
+                      var(--bg);
+          color:#e7e5ee;
+          -webkit-font-smoothing:antialiased;
+          -moz-osx-font-smoothing:grayscale;
+          padding:28px;
+        }
+
+        .app{
+          max-width:1100px;
+          margin:0 auto;
+        }
+
+        header{
+          display:flex;
+          align-items:center;
+          gap:16px;
+          margin-bottom:20px;
+        }
+        .logo{
+          width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+          box-shadow:var(--glow);
+          display:flex;align-items:center;justify-content:center;font-weight:800;color:#0b0a10;font-size:20px;
+        }
+        h1{font-size:20px;margin:0}
+        p.lead{margin:0;color:var(--muted);font-size:13px}
+
+        .controls{
+          display:flex;gap:12px;align-items:center;margin:18px 0 24px;
+        }
+        .search{
+          flex:1;display:flex;align-items:center;background:var(--glass);border:1px solid rgba(255,255,255,0.03);padding:10px 12px;border-radius:10px;backdrop-filter:blur(6px);
+        }
+        .search input{background:transparent;border:0;outline:none;color:inherit;font-size:14px;width:100%}
+
+        .grid{
+          display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;
+        }
+
+        .bot-card{
+          background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          border:1px solid rgba(92,59,214,0.08);
+          padding:14px;border-radius:12px;position:relative;overflow:hidden;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;
+          display:flex;gap:12px;align-items:center;box-shadow:0 6px 20px rgba(2,2,4,0.6);
+        }
+        .bot-card:focus{outline:2px solid rgba(138,43,226,0.25)}
+        .bot-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(11,8,20,0.6);}
+
+        .avatar{
+          width:64px;height:64px;border-radius:10px;flex:0 0 64px;background:linear-gradient(135deg,rgba(138,43,226,0.2),rgba(92,59,214,0.18));display:grid;place-items:center;font-weight:700;font-size:20px;color:#fff;border:1px solid rgba(255,255,255,0.04)
+        }
+        .meta{flex:1}
+        .name{font-weight:700;margin:0;font-size:15px}
+        .role{font-size:12px;color:var(--muted);margin-top:4px}
+        .tags{display:flex;gap:8px;margin-top:10px}
+        .tag{font-size:11px;padding:6px 8px;border-radius:999px;background:rgba(92,59,214,0.06);border:1px solid rgba(138,43,226,0.04)}
+
+        .select-btn{padding:8px 12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;border-radius:10px;color:#08060a;font-weight:600;cursor:pointer}
+        .select-btn[disabled]{opacity:.6;cursor:default}
+
+        .toast{position:fixed;right:22px;bottom:22px;background:#0d0c12;padding:12px 16px;border-radius:10px;border:1px solid rgba(138,43,226,0.12);box-shadow:var(--glow);font-size:13px}
+
+        /* subtle scanlines */
+        .scanlines::after{
+          content:'';position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);background-size:100% 3px;mix-blend-mode:overlay;opacity:.6
+        }
+
+        @media (max-width:520px){.controls{flex-direction:column;align-items:stretch}.logo{width:48px;height:48px}}
+    </style>
+</head>
+<body class="scanlines">
+<div class="app">
+    <header>
+        <div class="logo">OC</div>
+        <div>
+            <h1>OpenChat</h1>
+        </div>
+    </header>
+
+    <div class="controls">
+        <label class="search" for="q">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.8"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+            <input id="q" placeholder="Search (name, role, tags)..." />
+        </label>
+        <div style="display:flex;gap:8px;align-items:center">
+            <button id="refresh" title="Refresh" class="select-btn">Refresh</button>
+        </div>
+    </div>
+
+    <main>
+        <div id="grid" class="grid" role="list" aria-label="Bot list"></div>
+    </main>
+</div>
+
+<div id="toast" style="display:none" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+    /* ---------------------------
+       Configuration
+       --------------------------- */
+    // Change this endpoint to your server route that accepts the selected bot id
+    const ENDPOINT = '/api/select-bot';
+        fetch('/api/bots')
+      .then(res => res.json())
+      .then(bots => {
+        window.BOTS = bots;
+        renderBots(bots);
+      })
+      .catch(err => {
+        console.error('Error loading bots:', err);
+        renderBots([]); // Empty
+      });
+
+
+    // Example placeholder data. In production render server-side JSON into window.BOTS
+    window.BOTS = window.BOTS || [];
+
+    /* ---------------------------
+       Utilities
+       --------------------------- */
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    function renderBots(list){
+      const grid = $('#grid');
+      grid.innerHTML = '';
+      if(!list.length){
+        grid.innerHTML = '<div style="grid-column:1/-1;padding:28px;color:var(--muted);">No bots.</div>';
+        return;
+      }
+      list.forEach(bot => {
+        const card = document.createElement('button');
+        card.className = 'bot-card';
+        card.type = 'button';
+        card.setAttribute('role','listitem');
+        card.setAttribute('data-id',bot.id);
+        card.innerHTML = `
+          <div class="avatar">${(bot.name||'?').slice(0,2).toUpperCase()}</div>
+          <div class="meta">
+            <div class="name">${escapeHtml(bot.name||'Unnamed')}</div>
+            <div class="role">${escapeHtml(bot.role||'—')}</div>
+            <div class="tags">${(bot.tags||[]).slice(0,3).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+            <div style="margin-top:8px;font-size:13px;color:var(--muted);">${escapeHtml(bot.bio||'')}</div>
+          </div>
+          <div style="margin-left:8px;flex-shrink:0"><button class="select-btn" data-action="select">Select</button></div>
+        `;
+
+        // accessibility: allow keyboard press
+        card.addEventListener('click', onSelectBot);
+        card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); onSelectBot(e); } });
+
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(s){
+      return String(s)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#039;');
+    }
+
+    /* ---------------------------
+       Selecting / POST
+       --------------------------- */
+    async function onSelectBot(e){
+      // find button (card) element
+      const card = e.currentTarget.closest ? e.currentTarget.closest('.bot-card') : e.currentTarget;
+      const id = card && card.dataset && card.dataset.id;
+      if(!id) return showToast('Error: failed to get bot id.');
+
+      // visual feedback
+      card.style.opacity = '0.85';
+      card.style.transform = 'translateY(-4px) scale(.998)';
+
+      try{
+        showToast('Sending selection...');
+        const res = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ botId: id })
+        });
+
+        if(!res.ok){
+          let text = await res.text().catch(()=>res.statusText);
+          throw new Error(text || `HTTP ${res.status}`);
+        }
+
+        const json = await res.json().catch(()=>({}));
+        showToast('Bot selected — starting chat.');
+
+        // optional: redirect to chat or update UI
+        if(json.nextUrl) {
+          setTimeout(()=> location.href = json.nextUrl, 600);
+        }
+
+      }catch(err){
+        console.error(err);
+        showToast('Error selecting bot: '+ (err.message||err));
+      }finally{
+        setTimeout(()=>{card.style.opacity='';card.style.transform='';},350);
+      }
+    }
+
+    /* ---------------------------
+       Search + Interactions
+       --------------------------- */
+    const q = $('#q');
+    function filterQuery(){
+      const qv = (q.value||'').trim().toLowerCase();
+      const filtered = window.BOTS.filter(b=>{
+        if(!qv) return true;
+        const hay = `${b.name} ${b.role} ${b.bio} ${(b.tags||[]).join(' ')}`.toLowerCase();
+        return hay.includes(qv);
+      });
+      renderBots(filtered);
+    }
+
+    $('#refresh').addEventListener('click', ()=>{ // placeholder: call your API to fetch new list
+      showToast('Refreshing list...');
+      // if you have an endpoint to fetch bots, call it here and set window.BOTS = result
+      setTimeout(()=>{ renderBots(window.BOTS); showToast('List refreshed.'); }, 400);
+    });
+
+    q.addEventListener('input', debounce(filterQuery, 160));
+
+    function showToast(txt, ms=2200){
+      const t = $('#toast');
+      t.textContent = txt; t.style.display='block';
+      clearTimeout(t._h);
+      t._h = setTimeout(()=>{ t.style.display='none'; }, ms);
+    }
+
+    function debounce(fn, wait){ let h; return (...a)=>{ clearTimeout(h); h=setTimeout(()=>fn(...a), wait); }; }
+
+    // initial render
+    renderBots(window.BOTS);
+
+    // keyboard quick selection: numbers 1..9
+    document.addEventListener('keydown', (e)=>{
+      if(e.altKey || e.ctrlKey || e.metaKey) return;
+      const k = parseInt(e.key,10);
+      if(!isNaN(k) && k>=1 && k<=9){
+        const card = document.querySelector(`#grid .bot-card:nth-child(${k})`);
+        if(card) card.click();
+      }
+    });
+
+</script>
+</body>
+</html>
