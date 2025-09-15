@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OpenChat :: Cyber Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                bg: '#0a0018',
+                neon: {
+                  purple: '#b05cff',
+                  teal: '#00e5e5',
+                  pink: '#ff2ea6'
+                }
+              },
+              fontFamily: {
+                mono: ['Share Tech Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+              },
+              boxShadow: {
+                neon: '0 0 8px rgba(176,92,255,0.7), 0 0 18px rgba(0,229,229,0.35)'
+              },
+              dropShadow: {
+                neon: [
+                  '0 0 6px rgba(176,92,255,0.9)',
+                  '0 0 20px rgba(0,229,229,0.4)'
+                ]
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+        :root{
+          --bg:#0a0018;
+          --scanline: rgba(255,255,255,0.03);
+          --glow-purple: 0 0 12px rgba(176,92,255,0.85), 0 0 28px rgba(176,92,255,0.35);
+          --glow-teal: 0 0 10px rgba(0,229,229,0.9), 0 0 26px rgba(0,229,229,0.35);
+        }
+        html,body{height:100%}
+        body{
+          margin:0;
+          background:
+            radial-gradient(50% 50% at 20% 20%, rgba(176,92,255,0.12), transparent 60%),
+            radial-gradient(40% 40% at 80% 80%, rgba(0,229,229,0.08), transparent 60%),
+            var(--bg);
+          color:#e8dfff;
+          font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        /* CRT scanlines + subtle flicker */
+        .scanlines:before{
+          content:"";position:fixed;inset:0;pointer-events:none;
+          background-image: linear-gradient(var(--scanline) 1px, transparent 1px);
+          background-size: 100% 3px;mix-blend-mode: overlay;opacity:.6
+        }
+        .flicker{ animation: flicker 4.5s infinite both; }
+        @keyframes flicker{
+          0%, 100% { opacity: 1 }
+          48% { opacity: .96 }
+          50% { opacity: .92 }
+          52% { opacity: .98 }
+          70% { opacity: .94 }
+        }
+        /* Typewriter heading */
+        .typewriter{
+          --chars: 20; /* adjust to text length */
+          width: 0ch;
+          white-space: nowrap;
+          overflow: hidden;
+          border-right: 2px solid #00e5e5;
+          animation: typing 1.8s steps(var(--chars)) .3s forwards, caret .9s step-end infinite;
+          text-shadow: 0 0 6px rgba(0,229,229,0.9), 0 0 18px rgba(176,92,255,0.4);
+        }
+        @keyframes typing { to { width: calc(var(--chars) * 1ch) } }
+        @keyframes caret { 50% { border-color: transparent } }
+        /* Terminal inputs */
+        .terminal-input{
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(176,92,255,0.35);
+          outline: none; color: #e8dfff;
+          text-shadow: 0 0 6px rgba(176,92,255,.35);
+          box-shadow: inset 0 0 14px rgba(176,92,255,0.12);
+          caret-color: #00e5e5;
+          transition: box-shadow .2s ease, border-color .2s ease, transform .1s ease;
+        }
+        .terminal-input:focus{
+          border-color: #00e5e5;
+          box-shadow: inset 0 0 16px rgba(0,229,229,0.18), var(--glow-teal);
+        }
+        .neon-btn{
+          background: linear-gradient(90deg, #b05cff, #00e5e5 70%, #ff2ea6);
+          color: #0a0018; font-weight: 700;
+          text-shadow: none;
+          box-shadow: var(--glow-teal), var(--glow-purple);
+          transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+        }
+        .neon-btn:hover{ filter: brightness(1.1); }
+        .neon-btn:active{ transform: translateY(1px) }
+        .neon-border{
+          position: relative;
+        }
+        .neon-border:before{
+          content:"";position:absolute;inset:-1px;border-radius:14px;padding:1px;background:
+            linear-gradient(135deg, rgba(176,92,255,.85), rgba(0,229,229,.85) 60%, rgba(255,46,166,.9));
+          -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor; mask-composite: exclude;
+          filter: blur(0.5px); pointer-events:none;
+        }
+    </style>
+</head>
+<body class="scanlines">
+<div id="root"></div>
+
+<!-- React + ReactDOM -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Framer Motion UMD -->
+<script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+<!-- Babel for in-browser JSX -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+    const { useState } = React;
+    const { motion, AnimatePresence } = window.framerMotion || {};
+
+    function App(){
+      const [ready, setReady] = useState(false);
+      React.useEffect(()=>{
+        const t = setTimeout(()=> setReady(true), 1900); // after typing
+        return () => clearTimeout(t);
+      },[]);
+
+      function onSubmit(e){
+        e.preventDefault();
+        const fd = new FormData(e.currentTarget);
+        const u = fd.get('username');
+        const p = fd.get('password');
+        alert(`Login submitted\nuser: ${u}`);
+      }
+
+      return (
+        <div className="min-h-screen flex items-center justify-center p-6 md:p-10">
+          <div className="w-full max-w-md">
+            <div className="mb-8 text-center flicker">
+              <div className="mx-auto w-fit">
+                <h1 className="typewriter text-neon-teal text-2xl md:text-3xl tracking-widest">
+                  OPENCHAT :: LOGIN
+                </h1>
+              </div>
+              <p className="mt-3 text-sm text-neon-purple/90 drop-shadow-neon">
+                // access node: AUTH_GATE[OC-01]
+              </p>
+            </div>
+
+            <motion.div
+              className="neon-border rounded-[14px]"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            >
+              <div className="rounded-[14px] bg-white/0 backdrop-blur-[0px] p-6 md:p-7 border border-white/10 shadow-neon">
+                <AnimatePresence>
+                  {ready && (
+                    <motion.form
+                      key="form"
+                      onSubmit={onSubmit}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-5"
+                    >
+                      <div>
+                        <label htmlFor="username" className="block text-xs text-neon-teal/90 mb-2 tracking-widest">
+                          USERNAME
+                        </label>
+                        <input
+                          id="username"
+                          name="username"
+                          autoComplete="username"
+                          className="terminal-input w-full rounded-lg px-4 py-3 text-[15px] placeholder-white/35"
+                          placeholder="guest"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="password" className="block text-xs text-neon-teal/90 mb-2 tracking-widest">
+                          PASSWORD
+                        </label>
+                        <input
+                          id="password"
+                          type="password"
+                          name="password"
+                          autoComplete="current-password"
+                          className="terminal-input w-full rounded-lg px-4 py-3 text-[15px] placeholder-white/35"
+                          placeholder="••••••••"
+                          required
+                        />
+                      </div>
+                      <div className="pt-1">
+                        <button type="submit" className="neon-btn w-full rounded-lg px-4 py-3 tracking-widest">
+                          LOGIN
+                        </button>
+                      </div>
+                    </motion.form>
+                  )}
+                </AnimatePresence>
+
+                {!ready && (
+                  <div className="text-sm text-white/50 tracking-wide select-none" aria-hidden>
+                    initializing ·· loading ·· verifying ··
+                  </div>
+                )}
+              </div>
+            </motion.div>
+
+            <div className="mt-6 text-center text-[11px] text-white/45 tracking-widest">
+              <span className="text-neon-pink/80">::</span> CYBER TERMINAL INTERFACE <span className="text-neon-pink/80">::</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+</script>
+</body>
+</html>
+

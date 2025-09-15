@@ -1,4 +1,4 @@
-package com.openchat.web.controller;
+package com.openchat.web.controller.main;
 
 
 import com.openchat.web.dto.BotDTO;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class MainController {
+public class MainRestController {
     @GetMapping("/bots")
     public List<BotDTO> MainPage() {
         return List.of(

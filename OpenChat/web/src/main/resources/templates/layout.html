@@ -1,0 +1,65 @@
+<!-- layout.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title} ?: 'OpenChat'">OpenChat</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 200px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .main {
+            flex: 1;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        header {
+            margin-bottom: 20px;
+        }
+        .logo {
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="layout(content)">
+    <div class="layout">
+        <aside class="sidebar">
+            <a th:href="@{/}">🏠 Главная</a>
+            <a th:href="@{/profile}">👤 Профиль</a>
+        </aside>
+
+        <div class="main">
+            <header>
+                <div class="logo">OC</div>
+                <h1 th:text="${title}">OpenChat</h1>
+            </header>
+
+            <!-- вот сюда вставим содержимое -->
+            <div th:replace="${content}"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
