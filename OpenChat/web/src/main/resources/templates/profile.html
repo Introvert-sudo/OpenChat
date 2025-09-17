@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenChat :: Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{ --bg:#0a0018; --scanline: rgba(255,255,255,0.03); }
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(50% 50% at 20% 20%, rgba(176,92,255,0.12), transparent 60%),
+        radial-gradient(40% 40% at 80% 80%, rgba(0,229,229,0.08), transparent 60%),
+        var(--bg);
+      color:#e8dfff;
+      font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    .scanlines:before{ content:""; position:fixed; inset:0; pointer-events:none; background-image:linear-gradient(var(--scanline) 1px, transparent 1px); background-size:100% 3px; mix-blend-mode:overlay; opacity:.6 }
+    .card{ background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16) }
+    .pill{ background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14) }
+    .fade-item{ opacity:0; transform: translateY(-10px); }
+    .fade-in{ animation: fadeDown .5s ease forwards }
+    @keyframes fadeDown{ to{ opacity:1; transform: translateY(0)} }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      var items = document.querySelectorAll('.fade-item');
+      items.forEach(function(el, idx){
+        el.style.animationDelay = (idx * 120) + 'ms';
+        el.classList.add('fade-in');
+      });
+    });
+  </script>
+</head>
+<body class="scanlines">
+  <div class="min-h-screen px-4 md:px-8 pt-16 pb-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Back to main -->
+      <div class="fade-item mb-4">
+        <a href="/main" class="inline-flex items-center gap-2 px-3 py-2 rounded-md border border-white/20 hover:bg-white/5 text-sm">
+          <span>←</span>
+          <span>Back to Main</span>
+        </a>
+      </div>
+      <!-- Header: avatar + username -->
+      <div class="fade-item flex items-center gap-5 mb-6">
+        <div class="h-20 w-20 rounded-full bg-white/20"></div>
+        <div>
+          <div class="text-2xl tracking-widest">@username</div>
+          <div class="text-[11px] opacity-75">Member since 2025</div>
+        </div>
+      </div>
+
+      <!-- About me -->
+      <div class="fade-item card rounded-lg p-5 mb-6">
+        <div class="text-xs tracking-widest mb-3 opacity-80">ABOUT ME</div>
+        <p class="text-sm leading-6 opacity-90">I am an OpenChat user who loves creating helpful role-bots for coding and creativity. Coffee-powered and always exploring new ideas.</p>
+      </div>
+
+      <!-- Created bots -->
+      <div class="fade-item">
+        <div class="text-xs tracking-widest mb-3 opacity-80">MY BOTS</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="card rounded-lg p-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="h-10 w-10 rounded-full bg-white/25"></div>
+              <div>
+                <div class="text-base">Code Helper</div>
+                <div class="text-[10px] opacity-70">Developer Assistant</div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-[10px]">
+              <span class="pill px-2 py-1 rounded">coding</span>
+              <span class="pill px-2 py-1 rounded">java</span>
+              <span class="pill px-2 py-1 rounded">debug</span>
+            </div>
+          </div>
+
+          <div class="card rounded-lg p-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="h-10 w-10 rounded-full bg-white/25"></div>
+              <div>
+                <div class="text-base">Story Crafter</div>
+                <div class="text=[10px] opacity-70">Creative Writing</div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-[10px]">
+              <span class="pill px-2 py-1 rounded">creative</span>
+              <span class="pill px-2 py-1 rounded">plot</span>
+              <span class="pill px-2 py-1 rounded">themes</span>
+            </div>
+          </div>
+
+          <div class="card rounded-lg p-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="h-10 w-10 rounded-full bg-white/25"></div>
+              <div>
+                <div class="text-base">Travel Genie</div>
+                <div class="text=[10px] opacity-70">Trip Planner</div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-[10px]">
+              <span class="pill px-2 py-1 rounded">travel</span>
+              <span class="pill px-2 py-1 rounded">flights</span>
+              <span class="pill px-2 py-1 rounded">hotel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+

@@ -1,0 +1,30 @@
+package com.openchat.web.controller.authorization.login;
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+public class MainController {
+    @GetMapping("/")
+    public String Main() {
+        return "login";
+    }
+    
+    @PostMapping("/login")
+    public String processLogin(@RequestParam String username, 
+                              @RequestParam String password,
+                              RedirectAttributes redirectAttributes) {
+
+        if ("admin".equals(username) && "password".equals(password)) {
+            redirectAttributes.addFlashAttribute("message", "Login successful!");
+            return "redirect:/main";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Invalid username or password");
+            return "redirect:/login";
+        }
+    }
+}

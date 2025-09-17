@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>OpenChat :: Login</title>
+    <title>OpenChat :: Register</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -30,16 +30,16 @@
           background-image: linear-gradient(var(--scanline) 1px, transparent 1px);
           background-size: 100% 3px;mix-blend-mode: overlay;opacity:.6
         }
-        /* Heading character-by-character appearance */
         .appear span{opacity:0;display:inline-block;transform:translateY(6px)}
         @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-        /* Basic input + button styling */
         .field{background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color:#e8dfff; outline:none;}
         .field:focus{border-color:#8b5cf6; box-shadow:0 0 0 3px rgba(139,92,246,.15)}
         .btn-primary{background:#8b5cf6; color:#0a0018; font-weight:700}
         .btn-primary:hover{filter:brightness(1.08)}
         .btn-secondary{border:1px solid rgba(255,255,255,0.25); color:#e8dfff}
         .btn-secondary:hover{background:rgba(255,255,255,0.06)}
+        .muted-link{color:rgba(232,223,255,.8)}
+        .muted-link:hover{color:#fff}
     </style>
     <script>
       document.addEventListener('DOMContentLoaded', function(){
@@ -57,30 +57,34 @@
         });
       });
     </script>
-    <!-- Keep background only; minimal markup below -->
-  </head>
-  <body class="scanlines">
-    <div class="min-h-screen flex items-center justify-center p-6">
-      <div class="w-full max-w-sm">
-        <h1 id="heading" class="appear text-center text-3xl tracking-widest mb-2">OPENCHAT</h1>
-        <h2 id="subheading" class="appear text-center text-xs tracking-widest mb-8 opacity-80">LOGIN</h2>
+</head>
+<body class="scanlines">
+  <div class="min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-sm">
+      <h1 class="appear text-center text-3xl tracking-widest mb-2">OPENCHAT</h1>
+      <h2 class="appear text-center text-xs tracking-widest mb-8 opacity-80">REGISTER</h2>
 
-        <form action="/login" method="POST" class="space-y-4">
-          <div>
-            <label for="email" class="block text-xs mb-2 tracking-widest">EMAIL</label>
-            <input id="email" name="email" type="email" autocomplete="email" required class="field w-full rounded-md px-4 py-3" placeholder="you@example.com" />
-          </div>
-          <div>
-            <label for="password" class="block text-xs mb-2 tracking-widest">PASSWORD</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required class="field w-full rounded-md px-4 py-3" placeholder="••••••••" />
-          </div>
-          <div class="pt-2 space-y-3">
-            <button type="submit" class="btn-primary w-full rounded-md px-4 py-3 tracking-widest">LOGIN</button>
-            <button type="button" class="btn-secondary w-full rounded-md px-4 py-3 tracking-widest" onclick="window.location.href='/register'">REGISTER</button>
-          </div>
-        </form>
-      </div>
+      <form action="/register" method="POST" class="space-y-4">
+        <div>
+          <label for="email" class="block text-xs mb-2 tracking-widest">EMAIL</label>
+          <input id="email" name="email" type="email" autocomplete="email" required class="field w-full rounded-md px-4 py-3" placeholder="you@example.com" />
+        </div>
+        <div>
+          <label for="password" class="block text-xs mb-2 tracking-widest">PASSWORD</label>
+          <input id="password" name="password" type="password" autocomplete="new-password" required class="field w-full rounded-md px-4 py-3" placeholder="Create a password" />
+        </div>
+        <div>
+          <label for="confirmPassword" class="block text-xs mb-2 tracking-widest">CONFIRM PASSWORD</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required class="field w-full rounded-md px-4 py-3" placeholder="Repeat password" />
+        </div>
+        <div class="pt-2 space-y-3">
+          <button type="submit" class="btn-primary w-full rounded-md px-4 py-3 tracking-widest">CREATE ACCOUNT</button>
+          <button type="button" class="btn-secondary w-full rounded-md px-4 py-3 tracking-widest" onclick="window.location.href='/login'">BACK TO LOGIN</button>
+        </div>
+      </form>
     </div>
-  </body>
+  </div>
+</body>
 </html>
+
 
