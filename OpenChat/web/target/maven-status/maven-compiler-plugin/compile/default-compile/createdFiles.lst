@@ -1,0 +1,12 @@
+com\openchat\web\controller\authorization\register\RegisterController.class
+com\openchat\web\dto\Message.class
+com\openchat\web\OpenChatApplication.class
+com\openchat\web\dto\BotDTO.class
+com\openchat\web\controller\main\MainController.class
+com\openchat\web\model\Bot.class
+com\openchat\web\controller\profile\ProfileController.class
+com\openchat\web\controller\main\MainRestController.class
+com\openchat\web\dto\Chat.class
+com\openchat\web\model\User.class
+com\openchat\web\model\Entity.class
+com\openchat\web\dto\SelectBotRequest.class

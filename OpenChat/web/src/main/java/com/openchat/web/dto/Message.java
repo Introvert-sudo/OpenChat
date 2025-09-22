@@ -14,4 +14,11 @@ public class Message {
 
     @Getter
     private Entity sender;
+
+    public Message(long chat_id, long message_id, String message_text, Entity sender) {
+        this.chat_id = chat_id;
+        this.message_id = message_id;
+        this.message_text = message_text;
+        this.sender = sender;
+    }
 }

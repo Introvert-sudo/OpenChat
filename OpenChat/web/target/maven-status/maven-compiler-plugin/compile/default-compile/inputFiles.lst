@@ -1,0 +1,15 @@
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\controller\authorization\login\LoginController.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\controller\authorization\register\RegisterController.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\controller\chat\ChatRestController.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\controller\main\MainController.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\controller\main\MainRestController.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\controller\profile\ProfileController.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\dto\BotDTO.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\dto\Chat.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\dto\ChatInfo.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\dto\Message.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\dto\SelectBotRequest.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\model\Bot.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\model\Entity.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\model\User.java
+E:\MyProjects\OpenChat-2\OpenChat\web\src\main\java\com\openchat\web\OpenChatApplication.java

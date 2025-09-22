@@ -30,11 +30,50 @@
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
-      var items = document.querySelectorAll('.fade-item');
-      items.forEach(function(el, idx){
-        el.style.animationDelay = (idx * 120) + 'ms';
-        el.classList.add('fade-in');
+      function runStagger(){
+        var items = document.querySelectorAll('.fade-item');
+        items.forEach(function(el, idx){
+          el.style.animationDelay = (idx * 120) + 'ms';
+          el.classList.add('fade-in');
+        });
+      }
+
+      // Load profile info
+      fetch('/api/profile').then(function(r){ return r.json(); }).then(function(p){
+        var nameNode = document.getElementById('profileName');
+        var sinceNode = document.getElementById('memberSince');
+        var aboutNode = document.getElementById('aboutMe');
+        if(nameNode) nameNode.textContent = p.username || '@username';
+        if(sinceNode) sinceNode.textContent = 'Member since ' + (p.memberSince || '2025');
+        if(aboutNode) aboutNode.textContent = p.about || '';
+      }).catch(function(){});
+
+      // Load my bots
+      fetch('/api/profile/bots').then(function(r){ return r.json(); }).then(function(list){
+        var grid = document.getElementById('myBotsGrid');
+        if(!grid) return;
+        grid.innerHTML = '';
+        (list || []).forEach(function(bot){
+          var card = document.createElement('div');
+          card.className = 'card rounded-lg p-4';
+          var tagsHtml = (bot.tags || []).map(function(t){ return '<span class="pill px-2 py-1 rounded text-[10px]">'+t+'</span>'; }).join('');
+          card.innerHTML =
+            '<div class="flex items-center gap-3 mb-2">'+
+              '<div class="h-10 w-10 rounded-full bg-white/25"></div>'+
+              '<div>'+
+                '<div class="text-base">'+ (bot.name || '') +'</div>'+
+                '<div class="text-[10px] opacity-70">'+ (bot.subtitle || '') +'</div>'+
+              '</div>'+
+            '</div>'+
+            '<div class="flex flex-wrap gap-2 text-[10px]">'+ tagsHtml +'</div>';
+          grid.appendChild(card);
+        });
+      }).catch(function(){}).finally(function(){
+        runStagger();
       });
+
+      // Run stagger initially as well (in case fetch is slow)
+      runStagger();
     });
   </script>
 </head>
@@ -52,66 +91,21 @@
       <div class="fade-item flex items-center gap-5 mb-6">
         <div class="h-20 w-20 rounded-full bg-white/20"></div>
         <div>
-          <div class="text-2xl tracking-widest">@username</div>
-          <div class="text-[11px] opacity-75">Member since 2025</div>
+          <div id="profileName" class="text-2xl tracking-widest">@username</div>
+          <div id="memberSince" class="text-[11px] opacity-75">Member since 2025</div>
         </div>
       </div>
 
       <!-- About me -->
       <div class="fade-item card rounded-lg p-5 mb-6">
         <div class="text-xs tracking-widest mb-3 opacity-80">ABOUT ME</div>
-        <p class="text-sm leading-6 opacity-90">I am an OpenChat user who loves creating helpful role-bots for coding and creativity. Coffee-powered and always exploring new ideas.</p>
+        <p id="aboutMe" class="text-sm leading-6 opacity-90">I am an OpenChat user who loves creating helpful role-bots for coding and creativity. Coffee-powered and always exploring new ideas.</p>
       </div>
 
       <!-- Created bots -->
       <div class="fade-item">
         <div class="text-xs tracking-widest mb-3 opacity-80">MY BOTS</div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="card rounded-lg p-4">
-            <div class="flex items-center gap-3 mb-2">
-              <div class="h-10 w-10 rounded-full bg-white/25"></div>
-              <div>
-                <div class="text-base">Code Helper</div>
-                <div class="text-[10px] opacity-70">Developer Assistant</div>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2 text-[10px]">
-              <span class="pill px-2 py-1 rounded">coding</span>
-              <span class="pill px-2 py-1 rounded">java</span>
-              <span class="pill px-2 py-1 rounded">debug</span>
-            </div>
-          </div>
-
-          <div class="card rounded-lg p-4">
-            <div class="flex items-center gap-3 mb-2">
-              <div class="h-10 w-10 rounded-full bg-white/25"></div>
-              <div>
-                <div class="text-base">Story Crafter</div>
-                <div class="text=[10px] opacity-70">Creative Writing</div>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2 text-[10px]">
-              <span class="pill px-2 py-1 rounded">creative</span>
-              <span class="pill px-2 py-1 rounded">plot</span>
-              <span class="pill px-2 py-1 rounded">themes</span>
-            </div>
-          </div>
-
-          <div class="card rounded-lg p-4">
-            <div class="flex items-center gap-3 mb-2">
-              <div class="h-10 w-10 rounded-full bg-white/25"></div>
-              <div>
-                <div class="text-base">Travel Genie</div>
-                <div class="text=[10px] opacity-70">Trip Planner</div>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2 text-[10px]">
-              <span class="pill px-2 py-1 rounded">travel</span>
-              <span class="pill px-2 py-1 rounded">flights</span>
-              <span class="pill px-2 py-1 rounded">hotel</span>
-            </div>
-          </div>
-        </div>
+        <div id="myBotsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
     </div>
   </div>

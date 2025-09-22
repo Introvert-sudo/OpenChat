@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public class Chat {
     private final long chat_id;
     private ArrayList<Message> messages;
+    private ChatInfo chatInfo;
 
-    public Chat(long chat_id, ArrayList<Message> messages) {
+    public Chat(long chat_id, ArrayList<Message> messages, ChatInfo chatInfo) {
         this.chat_id = chat_id;
         this.messages = messages;
+        this.chatInfo = chatInfo;
     }
 }

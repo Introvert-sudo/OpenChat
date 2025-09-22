@@ -14,7 +14,6 @@ public class MainRestController {
     @GetMapping("/bots")
     public List<BotDTO> MainPage() {
         return List.of(
-                new BotDTO("0", "Makima", "Public Safety Leader", "just mommy", List.of("public-safety", "leader", "mommy")),
                 new BotDTO("1", "Code Helper", "Developer Assistant", "helps debug and explain code", List.of("coding", "java", "debug")),
                 new BotDTO("2", "Travel Buddy", "Trip Planner", "plans trips and itineraries", List.of("travel", "flights", "hotel")),
                 new BotDTO("3", "Fitness Coach", "Health & Training", "workouts and nutrition", List.of("fitness", "diet", "routine")),
