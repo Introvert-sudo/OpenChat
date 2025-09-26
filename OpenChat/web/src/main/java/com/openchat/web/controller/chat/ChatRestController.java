@@ -1,32 +1,32 @@
 
 package com.openchat.web.controller.chat;
 
+import com.openchat.core.core_controllers.chat.ChatCore;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openchat.web.dto.Chat;
-import com.openchat.web.dto.ChatInfo;
-import com.openchat.web.dto.Message;
-import com.openchat.web.model.Bot;
-import com.openchat.web.model.Entity;
-import com.openchat.web.model.User;
+import com.openchat.db.dto.Message;
+import com.openchat.db.model.Entity;
+import com.openchat.db.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ChatRestController {
+    private final ChatCore chatCore;
+
     // Mock chat info and messages
     @GetMapping("/chat/{id}")
     public Map<String, Object> chatInfo(@PathVariable String id) {
@@ -47,24 +47,20 @@ public class ChatRestController {
     }
 
     @GetMapping("/chat/{id}/messages")
-    public List<Map<String, Object>> chatMessages(@PathVariable String id) {
-        return List.of(
-                Map.of("sender", Map.of("name", "You"), "text", "Hey bot, help me with a bug."),
-                Map.of("sender", Map.of("name", "Code Helper"), "text", "Sure, paste the stacktrace."),
-                Map.of("sender", Map.of("name", "You"), "text", "NullPointerException at line 42 in MainController.")
-        );
+    public List<Message> chatMessages(@PathVariable String id) {
+        return chatCore.get_messages(Long.parseLong(id));
     }
 
 
     @PostMapping("/chat/{id}/send_message")
     public Message send_message(@PathVariable String id, @RequestBody Map<String, String> body) {
-        String text = body.get("message");
-        Entity sender = new User(Long.parseLong(id), "You");
+        String message_text = body.get("message");
+        long chat_id = Long.parseLong(id);
 
-        Message message = new Message(0, 0, text, sender);
+        Message answer = chatCore.on_user_message(chat_id, message_text);
 
-        System.out.println(message.getMessage_text() + " " + message.getSender().getNickname());
+        System.out.println("Answer:" + answer.toString());
 
-        return message;
+        return answer;
     }
 }

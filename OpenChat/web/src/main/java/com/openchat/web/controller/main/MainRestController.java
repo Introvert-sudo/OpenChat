@@ -1,8 +1,7 @@
 package com.openchat.web.controller.main;
 
-
-import com.openchat.web.dto.BotDTO;
-import com.openchat.web.dto.SelectBotRequest;
+import com.openchat.db.dto.BotDTO;
+import com.openchat.db.dto.SelectBotRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,11 +12,13 @@ import java.util.Map;
 public class MainRestController {
     @GetMapping("/bots")
     public List<BotDTO> MainPage() {
+
+
         return List.of(
-                new BotDTO("1", "Code Helper", "Developer Assistant", "helps debug and explain code", List.of("coding", "java", "debug")),
-                new BotDTO("2", "Travel Buddy", "Trip Planner", "plans trips and itineraries", List.of("travel", "flights", "hotel")),
-                new BotDTO("3", "Fitness Coach", "Health & Training", "workouts and nutrition", List.of("fitness", "diet", "routine")),
-                new BotDTO("4", "Story Teller", "Creative Writing", "ideas and plots", List.of("creative", "writing", "plot"))
+                new BotDTO(1, "Code Helper", 1, "helps debug and explain code", List.of("coding", "java", "debug")),
+                new BotDTO(2, "Travel Buddy", 2, "plans trips and itineraries", List.of("travel", "flights", "hotel")),
+                new BotDTO(3, "Fitness Coach", 3, "workouts and nutrition", List.of("fitness", "diet", "routine")),
+                new BotDTO(4, "Story Teller", 4, "ideas and plots", List.of("creative", "writing", "plot"))
         );
     }
 

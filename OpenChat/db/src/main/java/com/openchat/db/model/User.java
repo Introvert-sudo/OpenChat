@@ -1,4 +1,4 @@
-package com.openchat.web.model;
+package com.openchat.db.model;
 
 public class User extends Entity {
     private long user_id;

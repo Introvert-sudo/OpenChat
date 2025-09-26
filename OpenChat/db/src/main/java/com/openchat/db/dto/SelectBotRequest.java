@@ -1,4 +1,4 @@
-package com.openchat.web.dto;
+package com.openchat.db.dto;
 
 public class SelectBotRequest {
     public String botId;

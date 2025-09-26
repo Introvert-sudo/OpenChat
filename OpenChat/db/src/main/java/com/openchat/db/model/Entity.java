@@ -1,4 +1,4 @@
-package com.openchat.web.model;
+package com.openchat.db.model;
 
 import lombok.Getter;
 

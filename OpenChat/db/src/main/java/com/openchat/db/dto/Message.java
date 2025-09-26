@@ -1,19 +1,17 @@
-package com.openchat.web.dto;
+package com.openchat.db.dto;
 
-import com.openchat.web.model.Entity;
+import com.openchat.db.model.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 public class Message {
     private long message_id;
     private long chat_id;
+    private Entity sender;
 
-    @Getter
     @Setter
     private String message_text;
-
-    @Getter
-    private Entity sender;
 
     public Message(long chat_id, long message_id, String message_text, Entity sender) {
         this.chat_id = chat_id;

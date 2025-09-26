@@ -1,4 +1,4 @@
-package com.openchat.web.dto;
+package com.openchat.db.dto;
 
 import lombok.Getter;
 
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 @Getter
 public class Chat {
     private final long chat_id;
+    @Getter
     private ArrayList<Message> messages;
     private ChatInfo chatInfo;
 
