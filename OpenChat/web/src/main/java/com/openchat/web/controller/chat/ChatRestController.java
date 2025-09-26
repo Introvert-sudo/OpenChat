@@ -48,7 +48,7 @@ public class ChatRestController {
 
     @GetMapping("/chat/{id}/messages")
     public List<Message> chatMessages(@PathVariable String id) {
-        return chatCore.get_messages(Long.parseLong(id));
+        return chatCore.get_chat_messages(Long.parseLong(id));
     }
 
 
