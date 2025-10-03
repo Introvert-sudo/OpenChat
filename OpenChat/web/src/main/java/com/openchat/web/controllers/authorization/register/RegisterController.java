@@ -1,4 +1,4 @@
-package com.openchat.web.controller.authorization.register;
+package com.openchat.web.controllers.authorization.register;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

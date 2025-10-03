@@ -1,4 +1,4 @@
-package com.openchat.web.controller.main;
+package com.openchat.web.controllers.main;
 
 import com.openchat.db.dto.BotDTO;
 import com.openchat.db.dto.SelectBotRequest;

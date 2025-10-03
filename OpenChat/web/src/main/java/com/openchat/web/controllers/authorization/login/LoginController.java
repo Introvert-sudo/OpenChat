@@ -1,4 +1,4 @@
-package com.openchat.web.controller.authorization.login;
+package com.openchat.web.controllers.authorization.login;
 
 
 import org.springframework.stereotype.Controller;

@@ -6,6 +6,14 @@
         <artifactId>OpenChat</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>com.OpenChat</groupId>
+            <artifactId>db</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <artifactId>ai</artifactId>
     <name>Archetype - ai</name>
     <url>http://maven.apache.org</url>

@@ -1,4 +1,4 @@
-package com.openchat.db.dto;
+package com.openchat.db.model;
 
 import lombok.Getter;
 import lombok.Setter;

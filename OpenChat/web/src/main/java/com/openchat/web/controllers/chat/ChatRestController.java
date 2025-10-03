@@ -1,5 +1,5 @@
 
-package com.openchat.web.controller.chat;
+package com.openchat.web.controllers.chat;
 
 import com.openchat.core.core_controllers.chat.ChatCore;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openchat.db.dto.Message;
-import com.openchat.db.model.Entity;
-import com.openchat.db.model.User;
+import com.openchat.db.model.Message;
 
 import java.util.List;
 import java.util.Map;

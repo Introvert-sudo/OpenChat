@@ -1,4 +1,4 @@
-package com.openchat.web.controller.profile;
+package com.openchat.web.controllers.profile;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,10 +1,12 @@
 package com.openchat.core.core_controllers.chat;
 
+import com.openchat.ai.llm.AICore;
 import com.openchat.core.core_controllers.chat.messages.BotMessageFactory;
 import com.openchat.core.core_controllers.chat.messages.UserMessageFactory;
-import com.openchat.db.dto.Chat;
-import com.openchat.db.dto.ChatInfo;
-import com.openchat.db.dto.Message;
+import com.openchat.db.dto.AiServiceConf;
+import com.openchat.db.model.Chat;
+import com.openchat.db.model.ChatInfo;
+import com.openchat.db.model.Message;
 import com.openchat.db.model.Bot;
 import com.openchat.db.model.Entity;
 import com.openchat.db.model.User;
@@ -24,15 +26,21 @@ public class ChatCore {
 
     private final UserMessageFactory userMessageFactory;
     private final BotMessageFactory botMessageFactory;
+    private final AICore aiCore;
 
     // Web -> Core logic. Function for user input managing.
     public Message on_user_message(long chat_id, String message_text) {
         Message user_message = userMessageFactory.createMessage(chat_id, 0, message_text, get_user());
         Message bot_message = botMessageFactory.createMessage(chat_id, 1, "text", get_bot());
 
-        System.out.println("User message obj: " + user_message.toString() + "\nBot message obj: " + bot_message.toString());
+        // Mock
+        Chat chat = new Chat(chat_id, new ArrayList<>(), new ChatInfo(0, "", 0));
+        AiServiceConf aiServiceConf = new AiServiceConf(0, 0);
 
-        return bot_message;
+        Message response = aiCore.generateResponse(chat, aiServiceConf);
+
+
+        return response;
     }
 
     // Web -> Core logic. Function that transfer messages list from chat by unique chat id.

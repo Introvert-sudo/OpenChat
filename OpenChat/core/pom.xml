@@ -22,6 +22,11 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.OpenChat</groupId>
+            <artifactId>ai</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>core</finalName>

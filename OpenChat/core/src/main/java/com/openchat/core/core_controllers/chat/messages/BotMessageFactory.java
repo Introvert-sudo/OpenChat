@@ -1,6 +1,6 @@
 package com.openchat.core.core_controllers.chat.messages;
 
-import com.openchat.db.dto.Message;
+import com.openchat.db.model.Message;
 import com.openchat.db.model.Entity;
 import org.springframework.stereotype.Component;
 
